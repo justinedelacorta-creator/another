@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PC Repair & Home Service Specialist</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- HTML2Canvas Library para sa Image Generator ng Resibo -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo"><i class="fa-solid fa-laptop-code"></i> TechFix<span>Home</span></div>
+    <ul class="nav-links">
+      <li><a href="#rates">Service Rates</a></li>
+      <li><a href="#gallery">Proof of Service</a></li>
+      <li><a href="#calculator">Price Calculator</a></li>
+      <li><a href="#calculator" class="btn-primary btn-nav">Book Repair</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <span class="badge"><i class="fa-solid fa-house-laptop"></i> On-Site PC Repair & Troubleshooting</span>
+      <h1>Nasira ang PC o Laptop Mo? Ako ang Pupunta sa Bahay Mo!</h1>
+      <p>Propesyonal na pag-aayos ng Kompyuter, Formatting, Deep Cleaning, at Upgrades sa mismong tahanan ninyo.</p>
+      <div class="hero-btns">
+        <a href="#calculator" class="btn-primary"><i class="fa-solid fa-calculator"></i> Kwentahin ang Magagastos</a>
+        <a href="#rates" class="btn-secondary"><i class="fa-solid fa-list-check"></i> Tingnan ang Rates</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Service Rates List Section -->
+  <section id="rates" class="section">
+    <h2 class="section-title">Mga Standard Service Rates</h2>
+    <p class="section-subtitle">Transparent at tapat na presyo para sa inyong PC/Laptop care</p>
+
+    <div class="rates-grid">
+      <div class="rate-card">
+        <div class="rate-icon"><i class="fa-solid fa-compact-disc"></i></div>
+        <div class="rate-info">
+          <h3>Full System Formatting & OS Install</h3>
+          <p>Windows 10/11 OS Installation, Drivers, MS Office, Antivirus, & Basic Apps.</p>
+        </div>
+        <div class="rate-price">₱800 - ₱1,000</div>
+      </div>
+
+      <div class="rate-card">
+        <div class="rate-icon"><i class="fa-solid fa-microchip"></i></div>
+        <div class="rate-info">
+          <h3>PC Troubleshooting & Diagnostics</h3>
+          <p>Pagtukoy at pag-ayos sa No Display, Blue Screen, System Crash, o Mabagal na PC.</p>
+        </div>
+        <div class="rate-price">₱500 - ₱800</div>
+      </div>
+
+      <div class="rate-card">
+        <div class="rate-icon"><i class="fa-solid fa-broom"></i></div>
+        <div class="rate-info">
+          <h3>Deep Cleaning & Repasting</h3>
+          <p>Tanggal alikabok sa CPU/GPU, Palit Thermal Paste para iwas-overheat at patayin ang ingay ng fan.</p>
+        </div>
+        <div class="rate-price">₱700 / unit</div>
+      </div>
+
+      <div class="rate-card">
+        <div class="rate-icon"><i class="fa-solid fa-rocket"></i></div>
+        <div class="rate-info">
+          <h3>SSD / RAM Upgrade & OS Cloning</h3>
+          <p>Pina-mabilis ang lumang Laptop/PC gamit ang SSD Upgrade (Hindi nabubura ang files).</p>
+        </div>
+        <div class="rate-price">₱600 + Parts</div>
+      </div>
+
+      <div class="rate-card">
+        <div class="rate-icon"><i class="fa-solid fa-wifi"></i></div>
+        <div class="rate-info">
+          <h3>Home Network & WiFi Setup</h3>
+          <p>Router setup, Mesh WiFi installation, LAN crimping, at internet speed optimization.</p>
+        </div>
+        <div class="rate-price">₱800 - ₱1,200</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo / Video Gallery Section -->
+  <section id="gallery" class="section dark-bg">
+    <h2 class="section-title">Aktuwal na Home Service Projects</h2>
+    <p class="section-subtitle">Mga totoong kuha mula sa mga naayos na PC sa bahay ng kliyente</p>
+
+    <div class="grid-container">
+      <div class="card image-card">
+        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80" alt="PC Repair Work">
+        <div class="card-overlay">
+          <h3>Custom Gaming PC Troubleshooting</h3>
+          <p>Home Visit sa Kliyente</p>
+        </div>
+      </div>
+
+      <div class="card image-card">
+        <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&w=600&q=80" alt="Laptop Deep Cleaning">
+        <div class="card-overlay">
+          <h3>Laptop Deep Cleaning & Thermal Repaste</h3>
+          <p>Overheating Issue Fixed</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ <!-- Interactive PC Calculator & Booking Section -->
+  <section id="calculator" class="section">
+    <div class="calculator-card">
+      <h2 class="section-title">PC Service & Transport Fee Calculator</h2>
+      <p class="section-subtitle">Pumili ng kailangang ipagawa para makita agad ang tantyang presyo at resibo.</p>
+
+      <form id="pcBookingForm" onsubmit="sendPCBooking(event)">
+        <!-- Primary PC Service -->
+        <div class="form-group">
+          <label for="pcServiceSelect"><i class="fa-solid fa-wrench"></i> Primary PC Service:</label>
+          <select id="pcServiceSelect" class="form-control" required>
+            <option value="800" data-name="Full System Formatting & OS Setup">Full System Formatting & OS Setup — ₱800</option>
+            <option value="500" data-name="PC Diagnostics / Troubleshooting">PC Troubleshooting / Diagnostics — ₱500</option>
+            <option value="700" data-name="Deep Cleaning & Thermal Repaste">Deep Cleaning & Thermal Repaste — ₱700</option>
+            <option value="600" data-name="SSD / Hardware Upgrade Install">SSD / Hardware Upgrade Install — ₱600</option>
+            <option value="800" data-name="Home Network / WiFi Setup">Home Network / WiFi Setup — ₱800</option>
+          </select>
+        </div>
+
+        <!-- Quantity of Units -->
+        <div class="form-group">
+          <label for="unitQuantity"><i class="fa-solid fa-desktop"></i> Bilang ng PC / Laptop Unit:</label>
+          <input type="number" id="unitQuantity" class="form-control" min="1" max="10" value="1" required>
+        </div>
+
+        <!-- Home Service Distance / Location Fee -->
+        <div class="form-group">
+          <label for="locationFeeSelect"><i class="fa-solid fa-location-dot"></i> Lugar / Distance Fee (Home Visit):</label>
+          <select id="locationFeeSelect" class="form-control" required>
+            <option value="150" data-name="City Proper / Near Area">Near Area / City Proper — +₱150 Fare</option>
+            <option value="300" data-name="Outside City / Far Suburbs">Outside City / Far Suburbs — +₱300 Fare</option>
+            <option value="0" data-name="Shop Visit / Meetup">Shop Visit / Meetup (Walang Fare Charge) — ₱0</option>
+          </select>
+        </div>
+
+        <!-- Details Input -->
+        <div class="form-group">
+          <label for="clientName"><i class="fa-solid fa-user"></i> Buong Pangalan:</label>
+          <input type="text" id="clientName" class="form-control" placeholder="hal. Juan Dela Cruz" required>
+        </div>
+
+        <div class="form-group">
+          <label for="clientAddress"><i class="fa-solid fa-map-pin"></i> Kumpletong Sektor / Address:</label>
+          <input type="text" id="clientAddress" class="form-control" placeholder="hal. Brgy. San Jose, Block 2 Lot 5" required>
+        </div>
+
+        <div class="form-group">
+          <label for="pcIssue"><i class="fa-solid fa-triangle-exclamation"></i> Sira o Isyu ng PC/Laptop:</label>
+          <textarea id="pcIssue" class="form-control" rows="2" placeholder="hal. Ayaw mag-turn on, Blue screen, o Mabagal mag-boot" required></textarea>
+        </div>
+
+        <!-- LIVE ON-SCREEN RECEIPT CARD -->
+        <div class="receipt-container">
+          <div class="receipt-header">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <h3>OFFICIAL BOOKING RECEIPT</h3>
+            <span id="receiptRefNo">REF: #TF-0000</span>
+          </div>
+
+          <div class="receipt-body">
+            <div class="receipt-row">
+              <span>Customer:</span>
+              <strong id="receiptClientName">---</strong>
+            </div>
+            <div class="receipt-row">
+              <span>Address:</span>
+              <strong id="receiptAddress">---</strong>
+            </div>
+            <hr class="receipt-divider">
+            <div class="receipt-row">
+              <span id="receiptServiceName">Service Subtotal (x1):</span>
+              <strong id="receiptServiceCost">₱0.00</strong>
+            </div>
+            <div class="receipt-row">
+              <span id="receiptLocationName">Transport Fee:</span>
+              <strong id="receiptFareCost">₱0.00</strong>
+            </div>
+            <hr class="receipt-divider">
+            <div class="receipt-row total-row">
+              <span>KABUUANG BAYARIN:</span>
+              <strong id="pcTotalPrice">₱0.00</strong>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary btn-block">
+          <i class="fa-brands fa-facebook-messenger"></i> Kumpirmahin at I-send sa Messenger
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 TechFixHome Freelance PC Service. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
