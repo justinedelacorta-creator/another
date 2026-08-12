@@ -43,50 +43,62 @@ function calculatePCTotal() {
 function sendPCBooking(event) {
   event.preventDefault();
 
-  // ⚠️ PALITAN ITO NG IYONG FACEBOOK PAGE / PROFILE USERNAME
+  // ⚠️ PALITAN NG IYONG MESSENGER USERNAME O PAGE HANDLE
   const messengerUsername = "justine.delacorta"; 
 
-  // Kunin ang Element ng Resibo sa screen
   const receiptElement = document.querySelector(".receipt-container");
-
   if (!receiptElement) return;
 
-  // 1. Kumuha ng Image Snapshot ("Screenshot") ng Receipt Card
+  // Visual feedback habang nag-ge-generate
+  const submitBtn = event.target.querySelector("button[type='submit']");
+  const originalBtnText = submitBtn.innerHTML;
+  submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Ginagawa ang Resibo...`;
+  submitBtn.disabled = true;
+
   html2canvas(receiptElement, {
-    scale: 2, // Para HD at malinaw ang picture
-    backgroundColor: "#0f172a"
+    scale: 2, // High resolution
+    backgroundColor: "#0f172a",
+    useCORS: true
   }).then(canvas => {
-    // 2. I-convert ang snapshot bilang image file (.png)
-    const image = canvas.toDataURL("image/png");
-    
-    // 3. Awtomatikong i-download ang Image sa Phone / PC ng customer
-    const downloadLink = document.createElement("a");
-    downloadLink.href = image;
-    downloadLink.download = `Receipt_${currentRefNo}.png`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
+    // I-convert sa Blob/Image File
+    canvas.toBlob(function(blob) {
+      const imageUrl = URL.createObjectURL(blob);
+      
+      // Detection kung Mobile User
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    // 4. Magpakita ng Notice/Alert sa Kliyente
-    alert("Na-save/Na-download na ang Image Receipt sa iyong gallery/files!\n\nI-attach lang ang larawan sa Messenger chat na magbubukas.");
+      if (isMobile) {
+        // SA CELLPHONE: I-open ang Image sa bagong Window/Tab para pwedeng i-Save/Long-press o I-download
+        const imageWindow = window.open(imageUrl, '_blank');
+        
+        // I-prompt ang user
+        alert("Nagawa na ang iyong Resibo!\n\n1. I-press at i-hold (Long Press) ang larawan para mai-Save sa Gallery.\n2. Pagkatapos, pindutin ang OK para magpatuloy sa Messenger.");
 
-    // 5. Direktang ilipat ang customer sa Messenger Chat Mo
-    const targetUrl = `https://m.me/${messengerUsername}`;
-    window.location.href = targetUrl;
+        // I-restore ang button at lumipat sa Messenger
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        window.location.href = `https://m.me/${messengerUsername}`;
+      } else {
+        // SA PC: Standard Direct Download
+        const downloadLink = document.createElement("a");
+        downloadLink.href = imageUrl;
+        downloadLink.download = `Receipt_${currentRefNo}.png`;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        alert("Na-download na ang Image Receipt!\n\nI-attach lamang ito sa Messenger chat na magbubukas.");
+
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+        window.location.href = `https://m.me/${messengerUsername}`;
+      }
+    }, 'image/png');
+  }).catch(err => {
+    console.error("Error generating receipt image:", err);
+    alert("Nagkaroon ng problema. Direkta ka na naming ililipat sa Messenger.");
+    submitBtn.innerHTML = originalBtnText;
+    submitBtn.disabled = false;
+    window.location.href = `https://m.me/${messengerUsername}`;
   });
 }
-
-// Automatic Event Listeners
-document.addEventListener("DOMContentLoaded", () => {
-  calculatePCTotal();
-
-  const inputs = ["pcServiceSelect", "unitQuantity", "locationFeeSelect", "clientName", "clientAddress"];
-  inputs.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("input", calculatePCTotal);
-      el.addEventListener("change", calculatePCTotal);
-      el.addEventListener("keyup", calculatePCTotal);
-    }
-  });
-});
